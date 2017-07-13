@@ -13,16 +13,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Soulbound
-{
+public class Soulbound {
     private Main main;
     private String soulboundLore;
 
     private HashMap<ItemStack, Boolean> isSoulbound;
     private HashMap<ItemStack, Boolean> isValid;
 
-    public Soulbound(Main main)
-    {
+    public Soulbound(Main main) {
         this.main = main;
         this.soulboundLore = this.getMain().trans(
                 this.getMain().getConfig().getString("Soulbound.lore"));
@@ -30,8 +28,7 @@ public class Soulbound
         this.isValid = new HashMap<ItemStack, Boolean>();
     }
 
-    public boolean isItemValid(ItemStack itemStack)
-    {
+    public boolean isItemValid(ItemStack itemStack) {
         Material material = itemStack.getType();
         List<String> whitelist = this.getMain().getConfig().getStringList("Soulbound.item-whitelist");
         if (whitelist.contains(String.valueOf(material)))
@@ -43,17 +40,13 @@ public class Soulbound
             return this.isValid.get(itemStack);
     }
 
-    public boolean hasSoulbound(ItemStack itemStack)
-    {
-        if (itemStack.getType() != Material.AIR)
-        {
+    public boolean hasSoulbound(ItemStack itemStack) {
+        if (itemStack.getType() != Material.AIR) {
             ItemMeta itemMeta = itemStack.getItemMeta();
 
-            if (itemMeta.hasLore())
-            {
+            if (itemMeta.hasLore()) {
                 List<String> lore = itemMeta.getLore();
-                for (String l : lore)
-                {
+                for (String l : lore) {
                     if (l.contains(this.soulboundLore))
                         this.isSoulbound.put(itemStack, true);
                 }
@@ -66,8 +59,7 @@ public class Soulbound
             return this.isSoulbound.get(itemStack);
     }
 
-    public void applySoulbound(Player player, ItemStack itemStack)
-    {
+    public void applySoulbound(Player player, ItemStack itemStack) {
         ItemMeta itemMeta = itemStack.getItemMeta();
         List<String> lore;
 
@@ -85,8 +77,7 @@ public class Soulbound
         itemStack.setItemMeta(itemMeta);
     }
 
-    public Main getMain()
-    {
+    public Main getMain() {
         return main;
     }
 }
