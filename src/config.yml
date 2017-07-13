@@ -4,6 +4,11 @@ Soulbound:
   # The soulbound enchantment can only be applied to the items on the whitelist.
   item-whitelist:
    - 'DIAMOND_HELMET'
+   - 'DIAMOND_CHESTPLATE'
+   - 'DIAMOND_LEGGINGS'
+   - 'DIAMOND_BOOTS'
+   - 'DIAMOND_SWORD'
+   - 'DIAMOND_PICKAXE'
   # Here you can modify the actual Soulbound item:
   item:
     # This is the type of material that the Soulbound item will be.

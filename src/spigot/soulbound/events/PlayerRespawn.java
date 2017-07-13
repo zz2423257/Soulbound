@@ -28,6 +28,7 @@ public class PlayerRespawn implements Listener {
         if (this.getPlayerDeath().map.get(player.getUniqueId()) != null) {
             for (ItemStack itemStack : new ArrayList<>(this.getPlayerDeath().map.get(player.getUniqueId())))
                 player.getInventory().addItem(itemStack);
+            this.getPlayerDeath().map.remove(player.getUniqueId());
         }
     }
 
