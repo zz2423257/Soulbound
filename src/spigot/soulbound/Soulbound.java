@@ -7,6 +7,7 @@ package spigot.soulbound;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import spigot.soulbound.utils.SoulboundUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +15,12 @@ import java.util.List;
 public class Soulbound {
     private Main main;
     private String soulboundLore;
+    private SoulboundUtil soulboundUtil;
 
     public Soulbound(Main main) {
         this.main = main;
-        this.soulboundLore = this.getMain().trans(
+        this.soulboundUtil = new SoulboundUtil(this.main);
+        this.soulboundLore = this.soulboundUtil.trans(
                 this.getMain().getConfig().getString("Soulbound.lore"));
     }
 
@@ -26,7 +29,6 @@ public class Soulbound {
         List<String> whitelist = this.getMain().getConfig().getStringList("Soulbound.item-whitelist");
         if (whitelist.contains(String.valueOf(material)))
             return true;
-
         return false;
     }
 
@@ -42,12 +44,10 @@ public class Soulbound {
                 }
             }
         }
-
         return false;
     }
 
-    public void apply(ItemStack itemStack)
-    {
+    public void apply(ItemStack itemStack) {
         ItemMeta itemMeta = itemStack.getItemMeta();
         List<String> lore;
 
@@ -56,17 +56,35 @@ public class Soulbound {
         else
             lore = new ArrayList<String>();
 
-        lore.add(this.getMain().trans(this.soulboundLore));
+        lore.add(this.getSoulboundUtil().trans(this.soulboundLore));
 
         for (String l : lore)
-            this.getMain().trans(l);
+            this.getSoulboundUtil().trans(l);
 
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
-
     }
 
-    public boolean isSoulboundItem(ItemStack itemStack)
+    public boolean remove(ItemStack itemStack) {
+        if (this.isItemSoulbound(itemStack)) {
+            ItemMeta itemMeta = itemStack.getItemMeta();
+
+            List<String> newlore = new ArrayList<String>();
+            List<String> lore = itemMeta.getLore();
+
+            for (String l : lore) {
+                if (!l.contains(this.soulboundLore))
+                    newlore.add(l);
+            }
+
+            itemMeta.setLore(newlore);
+            itemStack.setItemMeta(itemMeta);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isSimilar(ItemStack itemStack)
     {
         if (itemStack.isSimilar(this.getSoulboundItem(1)))
             return true;
@@ -83,11 +101,11 @@ public class Soulbound {
         ItemMeta soulboundMeta = soulboundItem.getItemMeta();
 
         String displayname = this.getMain().getConfig().getString("Soulbound.item.displayname");
-        soulboundMeta.setDisplayName(this.getMain().trans(displayname));
+        soulboundMeta.setDisplayName(this.getSoulboundUtil().trans(displayname));
         List<String> newlore = new ArrayList<String>();
         List<String> lore = this.getMain().getConfig().getStringList("Soulbound.item.lore");
         for (String l : lore)
-            newlore.add(this.getMain().trans(l));
+            newlore.add(this.getSoulboundUtil().trans(l));
         soulboundMeta.setLore(newlore);
 
         soulboundItem.setItemMeta(soulboundMeta);
@@ -95,7 +113,11 @@ public class Soulbound {
         return soulboundItem;
     }
 
-    public Main getMain()
+    private SoulboundUtil getSoulboundUtil() {
+        return soulboundUtil;
+    }
+
+    private Main getMain()
     {
         return main;
     }

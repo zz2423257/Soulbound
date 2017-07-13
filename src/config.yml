@@ -8,10 +8,52 @@ Soulbound:
   item:
     # This is the type of material that the Soulbound item will be.
     material: BOOK
-    #
+    # Here you can clarify the sub-material of the Soulbound item.
     data: 0
-
-    name: '&7Soulbounder'
+    # This is the name that will be displayed on the Soulbound item.
+    displayname: '&6Soul&ebinder'
+    # Here you are able to add as many lore lines as you want :).
     lore:
-     - '&fLore'
+     - '&7Never lose your items again!'
 
+messages:
+  # Sent when the given item is not on the 'item-whitelist:'.
+  invalid-item: '&6Soulbound &7| &eYou may not apply the &6Soulbound Enchantment &eto this item.'
+  # Sent when the command '/soulbound apply' is performed and the given item already contains the
+  # soulbound enchantment.
+  item-already-soulbound: '&6Soulbound &7| &eThis item already contains the &6Soulbound Enchantment&e.'
+  # Sent when the command '/soulbound remove' is performed and the given item doesn't have the
+  # soulbound enchantment.
+  item-no-soulbound: '&6Soulbound &7| &eThis item does not contain the &6Soulbound Enchantment&e.'
+  success:
+    # Sent when the command '/soulbound apply' is performed and you have applied the
+    # soulbound enchantment with success.
+    apply: '&6Soulbound &7| &eYou successfully applied the &6Soulbound Enchantment &eto your item.'
+    # Sent when the command '/soulbound remove' is performed and you have removed the
+    # soulbound enchantment with success.
+    remove: '&6Soulbound &7| &eYou successfully removed the &6Soulbound Enchantment &efrom this item.'
+  give-all:
+    # Sent when the command '/soulbound give all | *' is performed to the receiver.
+    from: '&6Soulbound &7| &eYou successfully gave &6%amount%x Soulbound Enchantment &eto every player!'
+    # Sent when the command '/soulbound give all | *' is performed to the sender.
+    to: '&6Soulbound &7| &eYou have received &6%amount%x Soulbound Enchantment &eitems.'
+  give-other:
+    # Sent when the command '/soulbound give player' is performed to the receiver.
+    from: '&6Soulbound &7| &eYou successfully gave &6%amount%x Soulbound Enchantment &eitems to %player%'
+    # Sent when the command '/soulbound give player' is performed to the sender.
+    to: '&6Soulbound &7| &eYou have received &6%amount%x Soulbound Enchantment &eitems.'
+  # Sent when the player that was specified doesn't exist or is not online.
+  invalid-player: '&6Soulbound &7| &eThe player you have specified is not online.'
+  # Sent when the player doesn't have the correct permission to perform the action.
+  wrong-gamemode: '&6Soulbound &7| &eYou may not apply this enchantment in creative mode.'
+  no-permission: '&6Soulbound &7| &eInsufficient permission.'
+
+permissions:
+  # Permission node required to give other players soulbound enchantment items.
+  give-other: 'soulbound.give-other'
+  # Permission node required to give all players soulbound enchantment items.
+  give-all: 'soulbound.give-all'
+  # Permission node required to be able to use '/soulbound apply'.
+  apply: 'soulbound.apply'
+  # Permission node required to be able to use '/soulbound remove'.
+  remove: 'soulbound.remove'
