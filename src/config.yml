@@ -1,0 +1,4 @@
+Soulbound:
+  lore: '&6Soulbound I'
+  item-whitelist:
+   - 'DIAMOND_HELMET'

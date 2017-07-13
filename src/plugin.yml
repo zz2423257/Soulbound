@@ -1,0 +1,7 @@
+name: Soulbound
+main: spigot.soulbound.Main
+version: beta
+author: MisterFantasy
+commands:
+  soulbound:
+    description: Main command.

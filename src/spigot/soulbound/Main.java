@@ -4,6 +4,7 @@ package spigot.soulbound;
  * Soulbound created by MisterFantasy on 13-7-2017
  */
 
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import spigot.soulbound.command.CommandSoulbound;
@@ -16,6 +17,7 @@ public class Main extends JavaPlugin
     {
         this.registerCommand();
         this.registerEvents();
+        this.saveDefaultConfig();
     }
 
     private void registerCommand()
@@ -29,5 +31,17 @@ public class Main extends JavaPlugin
         //manager.registerEvents();
     }
 
+    public String trans(String imput)
+    {
+        return ChatColor.translateAlternateColorCodes('&', imput);
+    }
 
+    public void throwException(String exception)
+    {
+        try {
+            throw new Exception(exception);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
