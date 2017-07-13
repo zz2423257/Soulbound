@@ -4,6 +4,7 @@ package spigot.soulbound.command;
  * Soulbound created by MisterFantasy on 13-7-2017
  */
 
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -34,7 +35,14 @@ public class CommandSoulbound implements CommandExecutor
                     if (sender instanceof Player)
                     {
                         Player player = (Player) sender;
-                        this.getSoulbound().applySoulbound(player, player.getInventory().getItemInMainHand());
+                        ItemStack itemStack = player.getInventory().getItemInMainHand();
+                        if (this.getSoulbound().isItemValid(itemStack))
+                        {
+                            if(!this.getSoulbound().hasSoulbound(itemStack))
+                            {
+                                this.getSoulbound().applySoulbound(player, itemStack);
+                            }
+                        }
                     }
                 }
             }

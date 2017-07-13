@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Soulbound
@@ -17,55 +18,56 @@ public class Soulbound
     private Main main;
     private String soulboundLore;
 
-    private boolean isSoulbound;
-    private boolean isValid;
+    private HashMap<ItemStack, Boolean> isSoulbound;
+    private HashMap<ItemStack, Boolean> isValid;
 
     public Soulbound(Main main)
     {
         this.main = main;
-        this.isSoulbound = false;
-        this.isValid = false;
-        this.soulboundLore = this.getMain().getConfig().getString("Soulbound.lore");
+        this.soulboundLore = this.getMain().trans(
+                this.getMain().getConfig().getString("Soulbound.lore"));
+        this.isSoulbound = new HashMap<ItemStack, Boolean>();
+        this.isValid = new HashMap<ItemStack, Boolean>();
     }
 
-    private boolean isItemValid(ItemStack itemStack)
+    public boolean isItemValid(ItemStack itemStack)
     {
         Material material = itemStack.getType();
         List<String> whitelist = this.getMain().getConfig().getStringList("Soulbound.item-whitelist");
-        if (whitelist.contains(String.valueOf(material))) {
-            isValid = true;
-            this.getMain().throwException("Item is valid.");
-        }
-        return isValid;
+        if (whitelist.contains(String.valueOf(material)))
+            this.isValid.put(itemStack, true);
+
+        if (this.isValid.get(itemStack) == null)
+            return false;
+        else
+            return this.isValid.get(itemStack);
     }
 
-    private boolean hasSoulbound(ItemStack itemStack)
+    public boolean hasSoulbound(ItemStack itemStack)
     {
-        ItemMeta itemMeta = itemStack.getItemMeta();
-
-        if (this.isItemValid(itemStack))
+        if (itemStack.getType() != Material.AIR)
         {
-            List<String> lore;
+            ItemMeta itemMeta = itemStack.getItemMeta();
 
             if (itemMeta.hasLore())
             {
-                lore = itemMeta.getLore();
-                if (lore.contains(this.soulboundLore))
-                    this.isSoulbound = true;
+                List<String> lore = itemMeta.getLore();
+                for (String l : lore)
+                {
+                    if (l.contains(this.soulboundLore))
+                        this.isSoulbound.put(itemStack, true);
+                }
             }
         }
-        return isSoulbound;
+
+        if (this.isSoulbound.get(itemStack) == null)
+            return false;
+        else
+            return this.isSoulbound.get(itemStack);
     }
 
     public void applySoulbound(Player player, ItemStack itemStack)
     {
-        if (hasSoulbound(itemStack))
-        {
-            this.getMain().throwException("This item already has soulbound.");
-            return;
-        }
-
-
         ItemMeta itemMeta = itemStack.getItemMeta();
         List<String> lore;
 
@@ -74,15 +76,13 @@ public class Soulbound
         else
             lore = new ArrayList<String>();
 
-        lore.add(this.soulboundLore);
+        lore.add(this.getMain().trans(this.soulboundLore));
+
+        for (String l : lore)
+            this.getMain().trans(l);
 
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
-
-        player.setItemInHand(itemStack);
-        player.updateInventory();
-
-        this.getMain().throwException("Soulbound has been applied.");
     }
 
     public Main getMain()

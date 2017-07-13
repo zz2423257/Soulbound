@@ -39,6 +39,6 @@ public class Main extends JavaPlugin
 
     public void throwException(String exception)
     {
-        Bukkit.getLogger().info(exception);
+        Bukkit.broadcastMessage(exception);
     }
 }
