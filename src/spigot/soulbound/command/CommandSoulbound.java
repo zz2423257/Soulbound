@@ -29,8 +29,8 @@ public class CommandSoulbound implements CommandExecutor {
                 Player player = (Player) sender;
                 ItemStack itemStack = player.getInventory().getItemInMainHand();
                 if (this.getSoulbound().isItemValid(itemStack)) {
-                    if (!this.getSoulbound().hasSoulbound(itemStack)) {
-                        this.getSoulbound().applySoulbound(player, itemStack);
+                    if (!this.getSoulbound().isItemSoulbound(itemStack)) {
+                        this.getSoulbound().apply(itemStack);
                     }
                 }
             }

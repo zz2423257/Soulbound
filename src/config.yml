@@ -1,4 +1,17 @@
 Soulbound:
+  # When the soulbound enchantment is applied to an item, this lore will appear.
   lore: '&6Soulbound I'
+  # The soulbound enchantment can only be applied to the items on the whitelist.
   item-whitelist:
    - 'DIAMOND_HELMET'
+  # Here you can modify the actual Soulbound item:
+  item:
+    # This is the type of material that the Soulbound item will be.
+    material: BOOK
+    #
+    data: 0
+
+    name: '&7Soulbounder'
+    lore:
+     - '&fLore'
+

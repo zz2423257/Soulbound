@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import spigot.soulbound.command.CommandSoulbound;
+import spigot.soulbound.events.InventoryClick;
 
 public class Main extends JavaPlugin {
     private Soulbound soulbound;
@@ -24,7 +25,7 @@ public class Main extends JavaPlugin {
 
     private void registerEvents() {
         PluginManager manager = this.getServer().getPluginManager();
-        //manager.registerEvents();
+        manager.registerEvents(new InventoryClick(this), this);
     }
 
     public String trans(String imput) {
