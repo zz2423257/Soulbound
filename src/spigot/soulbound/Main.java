@@ -4,6 +4,7 @@ package spigot.soulbound;
  * Soulbound created by MisterFantasy on 13-7-2017
  */
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,10 +39,6 @@ public class Main extends JavaPlugin
 
     public void throwException(String exception)
     {
-        try {
-            throw new Exception(exception);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Bukkit.getLogger().info(exception);
     }
 }
