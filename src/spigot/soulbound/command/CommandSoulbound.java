@@ -40,137 +40,133 @@ public class CommandSoulbound implements CommandExecutor {
             }
 
             Player player = (Player) sender;
-            if (!player.hasPermission("soulbound")) {
-                player.sendMessage(this.getSoulboundUtil().trans(
-                        this.getMain().getConfig().getString("messages.no-permission")));
-                return true;
-            }
 
             if (args.length == 0) {
                 this.sendHelppage(player);
-                return true;
             }
+            else
+            {
+                ItemStack handItem = player.getInventory().getItemInHand();
 
-            ItemStack handItem = player.getInventory().getItemInHand();
-
-            if (args[0].equalsIgnoreCase("apply")) {
-                if (!player.hasPermission(this.getMain().getConfig().getString("permissions.apply"))) {
-                    player.sendMessage(this.getSoulboundUtil().trans(
-                            this.getMain().getConfig().getString("messages.no-permission")));
-                    return true;
-                }
-
-                if (!this.getSoulbound().isItemValid(handItem)) {
-                    player.sendMessage(this.getSoulboundUtil().trans(
-                            this.getMain().getConfig().getString("messages.invalid-item")));
-                    return true;
-                }
-
-                if (this.getSoulbound().isItemSoulbound(handItem)) {
-                    player.sendMessage(this.getSoulboundUtil().trans(
-                            this.getMain().getConfig().getString("messages.item-already-soulbound")));
-                    return true;
-                }
-
-                this.getSoulbound().apply(handItem);
-                player.sendMessage(this.getSoulboundUtil().trans(
-                        this.getMain().getConfig().getString("messages.success.apply")));
-                return true;
-            }
-
-            if (args[0].equalsIgnoreCase("remove")) {
-                if (!player.hasPermission(this.getMain().getConfig().getString("permissions.remove"))) {
-                    player.sendMessage(this.getSoulboundUtil().trans(
-                            this.getMain().getConfig().getString("messages.no-permission")));
-                    return true;
-                }
-
-                if (!this.getSoulbound().isItemValid(handItem)) {
-                    player.sendMessage(this.getSoulboundUtil().trans(
-                            this.getMain().getConfig().getString("messages.invalid-item")));
-                    return true;
-                }
-
-                if (!this.getSoulbound().isItemSoulbound(handItem)) {
-                    player.sendMessage(this.getSoulboundUtil().trans(
-                            this.getMain().getConfig().getString("messages.item-no-soulbound")));
-                    return true;
-                }
-
-                this.getSoulbound().remove(handItem);
-                player.sendMessage(this.getSoulboundUtil().trans(
-                        this.getMain().getConfig().getString("messages.success.remove")));
-                player.getInventory().addItem(this.getSoulbound().getSoulboundItem(1));
-                return true;
-            }
-
-            if (args[0].equalsIgnoreCase("give")) {
-                if (args.length == 1) {
-                    this.sendHelppage(player);
-                    return true;
-                }
-
-                int amount = 1;
-
-                if (args.length == 3)
-                    amount = this.parseInt(args[2]);
-
-                if (args[1].equalsIgnoreCase("all") ||
-                        args[1].equalsIgnoreCase("*")) {
-                    if (!player.hasPermission(this.getMain().getConfig().getString("permissions.give-all"))) {
+                if (args[0].equalsIgnoreCase("apply")) {
+                    if (!player.hasPermission(this.getMain().getConfig().getString("permissions.apply"))) {
                         player.sendMessage(this.getSoulboundUtil().trans(
                                 this.getMain().getConfig().getString("messages.no-permission")));
                         return true;
                     }
 
-                    for (Player each : Bukkit.getOnlinePlayers()) {
-                        each.getInventory().addItem(this.getSoulbound().getSoulboundItem(
-                                amount));
-                        each.sendMessage(this.getSoulboundUtil().trans(this.getMain().getConfig()
-                                .getString("messages.give-all.to").replace("%amount%", String.valueOf(amount))
-                                .replace("%player%", player.getName())));
+                    if (!this.getSoulbound().isItemValid(handItem)) {
+                        player.sendMessage(this.getSoulboundUtil().trans(
+                                this.getMain().getConfig().getString("messages.invalid-item")));
+                        return true;
                     }
-                    player.sendMessage(this.getSoulboundUtil().trans(this.getMain().getConfig()
-                            .getString("messages.give-all.from").replace("%amount%",
-                                    String.valueOf(amount))));
-                    return true;
-                }
 
-                if (!player.hasPermission(this.getMain().getConfig().getString("permissions.give-other"))) {
+                    if (this.getSoulbound().isItemSoulbound(handItem)) {
+                        player.sendMessage(this.getSoulboundUtil().trans(
+                                this.getMain().getConfig().getString("messages.item-already-soulbound")));
+                        return true;
+                    }
+
+                    this.getSoulbound().apply(handItem);
                     player.sendMessage(this.getSoulboundUtil().trans(
-                            this.getMain().getConfig().getString("messages.no-permission")));
+                            this.getMain().getConfig().getString("messages.success.apply")));
                     return true;
                 }
 
-                Player target = Bukkit.getPlayer(args[1]);
-                if (target == null) {
-                    player.sendMessage(this.getSoulboundUtil().trans(this.getMain().getConfig()
-                            .getString("messages.invalid-player")));
-                    return true;
-                }
+                if (args[0].equalsIgnoreCase("remove")) {
+                    if (!player.hasPermission(this.getMain().getConfig().getString("permissions.remove"))) {
+                        player.sendMessage(this.getSoulboundUtil().trans(
+                                this.getMain().getConfig().getString("messages.no-permission")));
+                        return true;
+                    }
 
-                target.getInventory().addItem(this.getSoulbound().getSoulboundItem(
-                        amount));
-                target.sendMessage(this.getSoulboundUtil().trans(this.getMain().getConfig()
-                        .getString("messages.give-other.to").replace("%amount%", String.valueOf(amount))
-                        .replace("%player%", player.getName())));
-                player.sendMessage(this.getSoulboundUtil().trans(this.getMain().getConfig()
-                        .getString("messages.give-other.from").replace("%amount%",
-                                String.valueOf(amount))
-                        .replace("%player%", target.getName())));
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("reload"))
-            {
-                if (!player.hasPermission(this.getMain().getConfig().getString("permissions.reload"))) {
+                    if (!this.getSoulbound().isItemValid(handItem)) {
+                        player.sendMessage(this.getSoulboundUtil().trans(
+                                this.getMain().getConfig().getString("messages.invalid-item")));
+                        return true;
+                    }
+
+                    if (!this.getSoulbound().isItemSoulbound(handItem)) {
+                        player.sendMessage(this.getSoulboundUtil().trans(
+                                this.getMain().getConfig().getString("messages.item-no-soulbound")));
+                        return true;
+                    }
+
+                    this.getSoulbound().remove(handItem);
                     player.sendMessage(this.getSoulboundUtil().trans(
-                            this.getMain().getConfig().getString("messages.no-permission")));
+                            this.getMain().getConfig().getString("messages.success.remove")));
+                    player.getInventory().addItem(this.getSoulbound().getSoulboundItem(1));
                     return true;
                 }
 
-                this.getMain().reloadConfig();
-                player.sendMessage(this.getSoulboundUtil().trans(
-                        this.getMain().getConfig().getString("messages.config-reloaded")));
+                if (args[0].equalsIgnoreCase("give")) {
+                    if (args.length == 1) {
+                        this.sendHelppage(player);
+                        return true;
+                    }
+
+                    int amount = 1;
+
+                    if (args.length == 3)
+                        amount = this.parseInt(args[2]);
+
+                    if (args[1].equalsIgnoreCase("all") ||
+                            args[1].equalsIgnoreCase("*")) {
+                        if (!player.hasPermission(this.getMain().getConfig().getString("permissions.give-all"))) {
+                            player.sendMessage(this.getSoulboundUtil().trans(
+                                    this.getMain().getConfig().getString("messages.no-permission")));
+                            return true;
+                        }
+
+                        for (Player each : Bukkit.getOnlinePlayers()) {
+                            each.getInventory().addItem(this.getSoulbound().getSoulboundItem(
+                                    amount));
+                            each.sendMessage(this.getSoulboundUtil().trans(this.getMain().getConfig()
+                                    .getString("messages.give-all.to").replace("%amount%", String.valueOf(amount))
+                                    .replace("%player%", player.getName())));
+                        }
+                        player.sendMessage(this.getSoulboundUtil().trans(this.getMain().getConfig()
+                                .getString("messages.give-all.from").replace("%amount%",
+                                        String.valueOf(amount))));
+                        return true;
+                    }
+
+                    if (!player.hasPermission(this.getMain().getConfig().getString("permissions.give-other"))) {
+                        player.sendMessage(this.getSoulboundUtil().trans(
+                                this.getMain().getConfig().getString("messages.no-permission")));
+                        return true;
+                    }
+
+                    Player target = Bukkit.getPlayer(args[1]);
+                    if (target == null) {
+                        player.sendMessage(this.getSoulboundUtil().trans(this.getMain().getConfig()
+                                .getString("messages.invalid-player")));
+                        return true;
+                    }
+
+                    target.getInventory().addItem(this.getSoulbound().getSoulboundItem(
+                            amount));
+                    target.sendMessage(this.getSoulboundUtil().trans(this.getMain().getConfig()
+                            .getString("messages.give-other.to").replace("%amount%", String.valueOf(amount))
+                            .replace("%player%", player.getName())));
+                    player.sendMessage(this.getSoulboundUtil().trans(this.getMain().getConfig()
+                            .getString("messages.give-other.from").replace("%amount%",
+                                    String.valueOf(amount))
+                            .replace("%player%", target.getName())));
+                    return true;
+                }
+                if (args[0].equalsIgnoreCase("reload"))
+                {
+                    if (!player.hasPermission(this.getMain().getConfig().getString("permissions.reload"))) {
+                        player.sendMessage(this.getSoulboundUtil().trans(
+                                this.getMain().getConfig().getString("messages.no-permission")));
+                        return true;
+                    }
+
+                    this.getMain().reloadConfig();
+                    player.sendMessage(this.getSoulboundUtil().trans(
+                            this.getMain().getConfig().getString("messages.config-reloaded")));
+                }
             }
         }
         return true;
