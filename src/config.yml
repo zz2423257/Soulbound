@@ -21,7 +21,7 @@ Soulbound:
     lore:
      - '&7Never lose your items again!'
   # Here you can decide whether or not you want to remove the soulbound lore
-  # from the item when a player dies.
+  # from the item on death.
   remove-lore-on-death: true
 
 messages:
