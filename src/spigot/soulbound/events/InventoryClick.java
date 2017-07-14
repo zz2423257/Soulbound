@@ -5,6 +5,7 @@ package spigot.soulbound.events;
  */
 
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +14,8 @@ import org.bukkit.inventory.ItemStack;
 import spigot.soulbound.Main;
 import spigot.soulbound.Soulbound;
 import spigot.soulbound.utils.SoulboundUtil;
+
+import java.util.*;
 
 public class InventoryClick implements Listener
 {
@@ -33,19 +36,25 @@ public class InventoryClick implements Listener
         ItemStack item = e.getCurrentItem();
         ItemStack cursor = e.getCursor();
 
-        if (item == null || cursor == null)
-            return;
+        if (item == null || cursor == null) return;
 
         Player player = (Player) e.getWhoClicked();
 
-        if (!this.getSoulbound().isSimilar(cursor))
-            return;
+        if (!this.getSoulbound().isSimilar(cursor)) return;
 
-        if (!this.getSoulbound().isItemValid(item))
-            return;
+        if (item.getType() == Material.AIR) return;
 
-        if (this.getSoulbound().isItemSoulbound(item))
+        if (!this.getSoulbound().isItemValid(item)) {
+            player.sendMessage(this.getSoulboundUtil().trans(
+                    this.getMain().getConfig().getString("messages.invalid-item")));
             return;
+        }
+
+        if (this.getSoulbound().isItemSoulbound(item)) {
+            player.sendMessage(this.getSoulboundUtil().trans(
+                    this.getMain().getConfig().getString("messages.item-already-soulbound")));
+            return;
+        }
 
         if (player.getGameMode() == GameMode.CREATIVE) {
             player.sendMessage(this.getSoulboundUtil().trans(
@@ -54,6 +63,9 @@ public class InventoryClick implements Listener
         }
 
         this.getSoulbound().apply(item);
+        player.sendMessage(this.getSoulboundUtil().trans(
+                this.getMain().getConfig().getString("messages.success.apply")));
+
         if (cursor.getAmount() > 1)
             cursor.setAmount(cursor.getAmount() - 1);
         else

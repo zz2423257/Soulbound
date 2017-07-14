@@ -158,6 +158,19 @@ public class CommandSoulbound implements CommandExecutor {
                         .getString("messages.give-other.from").replace("%amount%",
                                 String.valueOf(amount))
                         .replace("%player%", target.getName())));
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("reload"))
+            {
+                if (!player.hasPermission(this.getMain().getConfig().getString("permissions.reload"))) {
+                    player.sendMessage(this.getSoulboundUtil().trans(
+                            this.getMain().getConfig().getString("messages.no-permission")));
+                    return true;
+                }
+
+                this.getMain().reloadConfig();
+                player.sendMessage(this.getSoulboundUtil().trans(
+                        this.getMain().getConfig().getString("messages.config-reloaded")));
             }
         }
         return true;
@@ -168,6 +181,7 @@ public class CommandSoulbound implements CommandExecutor {
         list.add("&8&m--------------------------------------------------");
         list.add(" &6Soulbound &eapply &7| &eApplies the &6Soulbound Enchantment &efrom an item.");
         list.add(" &6Soulbound &eremove &7| &eRemoves the &6Soulbound Enchantment &efrom an item.");
+        list.add(" &6Soulbound &ereload &7| &eReload the &6config.yml&e in-game.");
         list.add(" &6Soulbound &egive <(all | *) | player> (amount) &7| " +
                 "&eGives all or one player a specified amount of the &6Soulbound Enchantment&e.");
         list.add("&8&m--------------------------------------------------");

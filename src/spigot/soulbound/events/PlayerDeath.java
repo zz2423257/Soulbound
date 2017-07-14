@@ -36,7 +36,8 @@ public class PlayerDeath implements Listener {
 
         for (ItemStack dropped : new ArrayList<>(e.getDrops())) {
             if (this.getSoulbound().isItemSoulbound(dropped)) {
-                this.getSoulbound().remove(dropped);
+                if (this.getMain().getConfig().getBoolean("Soulbound.remove-lore-on-death"))
+                    this.getSoulbound().remove(dropped);
 
                 items.add(dropped);
                 e.getDrops().remove(dropped);
@@ -45,8 +46,6 @@ public class PlayerDeath implements Listener {
 
         if (!map.containsKey(player.getUniqueId()))
             map.put(player.getUniqueId(), items);
-
-        Bukkit.getLogger().info(this.map.get(player.getUniqueId()).size() + "");
     }
 
     private Soulbound getSoulbound() {

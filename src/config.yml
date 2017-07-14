@@ -20,6 +20,9 @@ Soulbound:
     # Here you are able to add as many lore lines as you want :).
     lore:
      - '&7Never lose your items again!'
+  # Here you can decide whether or not you want to remove the soulbound lore
+  # from the item when a player dies.
+  remove-lore-on-death: true
 
 messages:
   # Sent when the given item is not on the 'item-whitelist:'.
@@ -49,9 +52,12 @@ messages:
     to: '&6Soulbound &7| &eYou have received &6%amount%x Soulbound Enchantment &eitems.'
   # Sent when the player that was specified doesn't exist or is not online.
   invalid-player: '&6Soulbound &7| &eThe player you have specified is not online.'
-  # Sent when the player doesn't have the correct permission to perform the action.
+  # Sent when the player doesn't have the correct gamemode to perform the action.
   wrong-gamemode: '&6Soulbound &7| &eYou may not apply this enchantment in creative mode.'
+  # Sent when the player doesn't have the correct permission to perform the action.
   no-permission: '&6Soulbound &7| &eInsufficient permission.'
+  # Sent when the user has reloaded the config.yml
+  config-reloaded: '&6Soulbound &7| &eYou have successfully reloaded the &6config.yml&e.'
 
 permissions:
   # Permission node required to give other players soulbound enchantment items.
@@ -62,3 +68,5 @@ permissions:
   apply: 'soulbound.apply'
   # Permission node required to be able to use '/soulbound remove'.
   remove: 'soulbound.remove'
+  # Permission node required to be able to use '/soulbound reload'.
+  reload: 'soulbound.reload'
