@@ -29,6 +29,7 @@ public class CommandSoulbound implements CommandExecutor {
         this.soulboundUtil = new SoulboundUtil(this.main);
     }
 
+    @Deprecated
     @Override
     public boolean onCommand(CommandSender sender, Command command, String lbl, String[] args) {
         if (command.getName().equalsIgnoreCase("soulbound")) {
@@ -50,7 +51,7 @@ public class CommandSoulbound implements CommandExecutor {
                 return true;
             }
 
-            ItemStack handItem = player.getInventory().getItemInMainHand();
+            ItemStack handItem = player.getInventory().getItemInHand();
 
             if (args[0].equalsIgnoreCase("apply")) {
                 if (!player.hasPermission(this.getMain().getConfig().getString("permissions.apply"))) {
@@ -155,7 +156,8 @@ public class CommandSoulbound implements CommandExecutor {
                         .replace("%player%", player.getName())));
                 player.sendMessage(this.getSoulboundUtil().trans(this.getMain().getConfig()
                         .getString("messages.give-other.from").replace("%amount%",
-                                String.valueOf(amount))));
+                                String.valueOf(amount))
+                        .replace("%player%", target.getName())));
             }
         }
         return true;

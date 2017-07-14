@@ -1,6 +1,6 @@
 name: Soulbound
 main: spigot.soulbound.Main
-version: beta
+version: 0.0.1
 author: MisterFantasy
 commands:
   soulbound:
