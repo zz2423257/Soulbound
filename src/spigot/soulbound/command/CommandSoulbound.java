@@ -44,8 +44,7 @@ public class CommandSoulbound implements CommandExecutor {
             if (args.length == 0) {
                 this.sendHelppage(player);
             }
-            else
-            {
+            else {
                 ItemStack handItem = player.getInventory().getItemInHand();
 
                 if (args[0].equalsIgnoreCase("apply")) {
@@ -155,8 +154,7 @@ public class CommandSoulbound implements CommandExecutor {
                             .replace("%player%", target.getName())));
                     return true;
                 }
-                if (args[0].equalsIgnoreCase("reload"))
-                {
+                if (args[0].equalsIgnoreCase("reload")) {
                     if (!player.hasPermission(this.getMain().getConfig().getString("permissions.reload"))) {
                         player.sendMessage(this.getSoulboundUtil().trans(
                                 this.getMain().getConfig().getString("messages.no-permission")));
@@ -166,6 +164,20 @@ public class CommandSoulbound implements CommandExecutor {
                     this.getMain().reloadConfig();
                     player.sendMessage(this.getSoulboundUtil().trans(
                             this.getMain().getConfig().getString("messages.config-reloaded")));
+                    return true;
+                }
+
+                List<String> arguments = new ArrayList<String>();
+                arguments.add("apply");
+                arguments.add("remove");
+                arguments.add("give");
+                arguments.add("reload");
+
+                for (String a : arguments) {
+                    if (!args[0].toLowerCase().equals(a)) {
+                        sendHelppage(player);
+                        return true;
+                    }
                 }
             }
         }

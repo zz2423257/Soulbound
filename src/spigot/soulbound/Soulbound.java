@@ -25,10 +25,15 @@ public class Soulbound {
     }
 
     public boolean isItemValid(ItemStack itemStack) {
-        Material material = itemStack.getType();
-        List<String> whitelist = this.getMain().getConfig().getStringList("Soulbound.item-whitelist");
-        if (whitelist.contains(String.valueOf(material)))
+        if (this.getMain().getConfig().getBoolean("Soulbound.disable-whitelist"))
             return true;
+        else
+        {
+            Material material = itemStack.getType();
+            List<String> whitelist = this.getMain().getConfig().getStringList("Soulbound.item-whitelist");
+            if (whitelist.contains(String.valueOf(material)))
+                return true;
+        }
         return false;
     }
 

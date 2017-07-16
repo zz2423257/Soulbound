@@ -1,6 +1,9 @@
 Soulbound:
   # When the soulbound enchantment is applied to an item, this lore will appear.
   lore: '&6Soulbound I'
+  # When the option 'disable-whitelist' is set to true, the plugin will not check if
+  # the given item to soulbound is valid.
+  disable-whitelist: true
   # The soulbound enchantment can only be applied to the items on the whitelist.
   item-whitelist:
    - 'DIAMOND_HELMET'
