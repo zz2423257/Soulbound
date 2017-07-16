@@ -22,11 +22,13 @@ public class CommandSoulbound implements CommandExecutor {
     private Main main;
     private Soulbound soulbound;
     private SoulboundUtil soulboundUtil;
+    private List<String> arguments;
 
     public CommandSoulbound(Main main) {
         this.main = main;
         this.soulbound = new Soulbound(this.main);
         this.soulboundUtil = new SoulboundUtil(this.main);
+        this.arguments = arguments = new ArrayList<String>();
     }
 
     @Deprecated
@@ -43,8 +45,7 @@ public class CommandSoulbound implements CommandExecutor {
 
             if (args.length == 0) {
                 this.sendHelppage(player);
-            }
-            else {
+            } else {
                 ItemStack handItem = player.getInventory().getItemInHand();
 
                 if (args[0].equalsIgnoreCase("apply")) {
@@ -167,21 +168,30 @@ public class CommandSoulbound implements CommandExecutor {
                     return true;
                 }
 
-                List<String> arguments = new ArrayList<String>();
-                arguments.add("apply");
-                arguments.add("remove");
-                arguments.add("give");
-                arguments.add("reload");
-
-                for (String a : arguments) {
-                    if (!args[0].toLowerCase().equals(a)) {
-                        sendHelppage(player);
-                        return true;
-                    }
+                if (args[0].equalsIgnoreCase("-about")) {
+                    player.sendMessage(this.getSoulboundUtil().trans("&6&lSoulbound &8(&7Version " +
+                            this.getMain().getDescription().getVersion() + " by MisterFantasy&8)"));
+                    return true;
                 }
+
+                checkForArgs(args, player);
             }
         }
         return true;
+    }
+
+    private void checkForArgs(String[] args, Player player) {
+        this.arguments.add("apply");
+        this.arguments.add("remove");
+        this.arguments.add("give");
+        this.arguments.add("reload");
+        this.arguments.add("-about");
+
+        for (String a : arguments) {
+            if (!args[0].toLowerCase().equals(a)) {
+                sendHelppage(player);
+            }
+        }
     }
 
     private void sendHelppage(Player player) {
