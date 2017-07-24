@@ -15,8 +15,6 @@ import spigot.soulbound.Main;
 import spigot.soulbound.Soulbound;
 import spigot.soulbound.utils.SoulboundUtil;
 
-import java.util.*;
-
 public class InventoryClick implements Listener
 {
     private Main main;

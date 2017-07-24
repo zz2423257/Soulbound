@@ -61,6 +61,9 @@ messages:
   no-permission: '&6Soulbound &7| &eInsufficient permission.'
   # Sent when the user has reloaded the config.yml
   config-reloaded: '&6Soulbound &7| &eYou have successfully reloaded the &6config.yml&e.'
+  bound:
+    confirm-message: '&6Soulbound &7| &eRight-click the item to apply soulbound.'
+    confirm-failure: '&6Soulbound &7| &eYou are already confirming an item.'
 
 permissions:
   # Permission node required to give other players soulbound enchantment items.
@@ -73,3 +76,5 @@ permissions:
   remove: 'soulbound.remove'
   # Permission node required to be able to use '/soulbound reload'.
   reload: 'soulbound.reload'
+  # Permission node required to be able to use '/soulbound bound'.
+  bound: 'soulbound.bound'

@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import spigot.soulbound.command.CommandSoulbound;
 import spigot.soulbound.events.InventoryClick;
 import spigot.soulbound.events.PlayerDeath;
+import spigot.soulbound.events.PlayerInteract;
 import spigot.soulbound.events.PlayerRespawn;
 
 public class Main extends JavaPlugin {
@@ -29,5 +30,6 @@ public class Main extends JavaPlugin {
         manager.registerEvents(new InventoryClick(this), this);
         manager.registerEvents(new PlayerDeath(this), this);
         manager.registerEvents(new PlayerRespawn(this), this);
+        manager.registerEvents(new PlayerInteract(this), this);
     }
 }

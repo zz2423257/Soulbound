@@ -4,7 +4,6 @@ package spigot.soulbound.events;
  * Soulbound created by MisterFantasy on 13-7-2017
  */
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,7 +30,7 @@ public class PlayerDeath implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
-        Player player = (Player) e.getEntity();
+        Player player = e.getEntity();
         List<ItemStack> items = new ArrayList<ItemStack>();
 
         for (ItemStack dropped : new ArrayList<>(e.getDrops())) {

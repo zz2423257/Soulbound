@@ -53,6 +53,7 @@ public class Soulbound {
     }
 
     public void apply(ItemStack itemStack) {
+
         ItemMeta itemMeta = itemStack.getItemMeta();
         List<String> lore;
 
@@ -91,10 +92,8 @@ public class Soulbound {
 
     public boolean isSimilar(ItemStack itemStack)
     {
-        if (itemStack.isSimilar(this.getSoulboundItem(1)))
-            return true;
+        return itemStack.isSimilar(this.getSoulboundItem(1));
 
-        return false;
     }
 
     public ItemStack getSoulboundItem(int amount)
